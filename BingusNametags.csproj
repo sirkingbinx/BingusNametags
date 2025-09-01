@@ -26,7 +26,7 @@
 		  <HintPath>$(BepInExAssemblyPath)\BepInEx.dll</HintPath>
 		</Reference>
 		<Reference Include="GorillaFriends">
-		  <HintPath>..\..\..\..\..\Program Files\Oculus\Software\Software\another-axiom-gorilla-tag\BepInEx\plugins\GorillaFriends\GorillaFriends.dll</HintPath>
+		  <HintPath>$(PluginsPath)\GorillaFriends.dll</HintPath>
 		</Reference>
 		<Reference Include="Meta.XR.BuildingBlocks">
 		  <HintPath>$(GameAssemblyPath)\Meta.XR.BuildingBlocks.dll</HintPath>
