@@ -26,7 +26,7 @@
 		  <HintPath>$(BepInExAssemblyPath)\BepInEx.dll</HintPath>
 		</Reference>
 		<Reference Include="GorillaFriends">
-		  <HintPath>$(PluginsPath)\GorillaFriends.dll</HintPath>
+		  <HintPath>$(PluginsPath)\GorillaFriends\GorillaFriends.dll</HintPath>
 		</Reference>
 		<Reference Include="Meta.XR.BuildingBlocks">
 		  <HintPath>$(GameAssemblyPath)\Meta.XR.BuildingBlocks.dll</HintPath>

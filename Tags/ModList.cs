@@ -11,7 +11,7 @@ namespace BingusNametags.Tags
 
         private static string GetMods(VRRig rig)
         {
-            string result;
+            string result = "";
 
             // a little fucked, but gets properties
             foreach (string prop in rig.OwningNetPlayer.GetPlayerRef().CustomProperties.Keys)
@@ -67,7 +67,7 @@ namespace BingusNametags.Tags
 
                 foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
                     if (vrrig != GorillaTagger.Instance.offlineVRRig)
-                        Platform.UpdateTag(vrrig);
+                        ModList.UpdateTag(vrrig);
             }
         }
     }

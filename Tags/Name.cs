@@ -10,8 +10,8 @@ namespace BingusNametags.Tags
 
         static float offset = 1f;
 
-        public static void Enabled = false;
-        public static void GFriends = false;
+        public static bool Enabled = false;
+        public static bool GFriends = false;
 
         public static void Update()
         {
