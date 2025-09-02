@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BingusNametags.Tags
 {
-    public class Platform
+    public class ModList
     {
         public static bool Enabled = false;   
         public static Dictionary<VRRig, GameObject> mtags = new Dictionary<VRRig, GameObject>();
