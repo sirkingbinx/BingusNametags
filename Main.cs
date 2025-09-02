@@ -50,6 +50,12 @@ public class Main: BaseUnityPlugin
                 }
             }
         }
+
+        Name.Enabled = Config.Bind("Name", "Enabled", true, "Shows name of players").Value;
+        Name.GFriends = Config.Bind("Name", "GFriendsIntegration", true, "Use GorillaFriends to get colors for names").Value;
+        Platform.Enabled = Config.Bind("Platform", "Enabled", true, "Checks platform of players").Value;
+        Platform.UseOculusName = Config.Bind("Platform", "UseOculusName", true, "Replaces \"Oculus\" and \"Meta\" with \"Oculus Rift\" and \"Oculus Quest\".").Value;
+        ModList.Enabled = Config.Bind("ModList", "Enabled", true, "Shows lists of (known) mods for players (if they have any)").Value;
     }
 
     public void Update()

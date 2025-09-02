@@ -8,10 +8,14 @@ namespace BingusNametags.Tags
     {
         private static Dictionary<VRRig, GameObject> tags = new Dictionary<VRRig, GameObject>();
 
-        static float offset = 0.8f;
+        static float offset = 1f;
+
+        public static void Enabled = false;
+        public static void GFriends = false;
 
         public static void Update()
         {
+            if (!Enabled) return;
             if (GorillaParent.instance != null)
             {
                 List<VRRig> list = new List<VRRig>();
@@ -40,8 +44,13 @@ namespace BingusNametags.Tags
 
             TextMeshPro component = tags[rig].GetComponent<TextMeshPro>();
 
-            if (GFriendsIntegration.RecentlyPlayedWith(rig.OwningNetPlayer))
-                component.text = $"<color=#ffa0a0>{rig.OwningNetPlayer.NickName}</color>";
+            if (GFriends) {
+                if (GFriendsIntegration.RecentlyPlayedWith(rig.OwningNetPlayer))
+                    component.text = $"<color=#ffa0a0>{rig.OwningNetPlayer.NickName}</color>";
+                
+                if (GFriendsIntegration.Friend(rig.OwningNetPlayer))
+                    component.text = $"<color=#cc7fe5>{rig.OwningNetPlayer.NickName}</color>";
+            }
 
             bool verified = Main.KnownPeople.Contains(rig.OwningNetPlayer.UserId);
 
@@ -49,9 +58,6 @@ namespace BingusNametags.Tags
                 component.text = rig.OwningNetPlayer.NickName;
             else
                 component.text = $"<color=#7fff7f>{rig.OwningNetPlayer.NickName}</color>";
-
-            if (GFriendsIntegration.Friend(rig.OwningNetPlayer))
-                component.text = $"<color=#cc7fe5>{rig.OwningNetPlayer.NickName}</color>";
 
             Transform transform = rig.transform.Find("Head") ?? rig.transform;
             tags[rig].transform.position = transform.position + new Vector3(0f, offset, 0f);
