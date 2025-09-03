@@ -29,5 +29,22 @@ namespace BingusNametags
 
             return gameObject;
         }
+
+        public class TMPLookAt : MonoBehaviour
+        {
+            private void Update()
+            {
+                if (who != null && text != null)
+                {
+                    Camera.main.transform.forward.y = 0f;
+                    Camera.main.transform.forward.Normalize();
+
+                    transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
+                }
+            }
+
+            public VRRig who;
+            public TextMeshPro text;
+        }
     }
 }

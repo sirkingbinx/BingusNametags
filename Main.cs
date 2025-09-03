@@ -12,7 +12,6 @@ using UnityEngine;
 [BepInPlugin("bingus.nametags", "BingusNametags", "1.0.0")]
 public class Main: BaseUnityPlugin
 {
-    public static FontStyles activeTMPFontStyle = FontStyles.Bold;
     private const string GorillaInfoURL = "https://raw.githubusercontent.com/HanSolo1000Falcon/GorillaInfo/main/";
 
     public static Dictionary<string, string> KnownMods = new Dictionary<string, string>();
@@ -72,23 +71,4 @@ public class Main: BaseUnityPlugin
 
     public static event Action UpdateTags = delegate { };
     public void Update() => UpdateTags();
-
-    public class TMPLookAt : MonoBehaviour
-    {
-        private void Update()
-        {
-            if (Camera.main != null && text != null)
-            {
-                Vector3 forward = Camera.main.transform.forward;
-
-                forward.y = 0f;
-                forward.Normalize();
-
-                transform.rotation = Quaternion.LookRotation(forward);
-            }
-        }
-
-        public VRRig who;
-        public TextMeshPro text;
-    }
 }
