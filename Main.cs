@@ -17,52 +17,61 @@ public class Main: BaseUnityPlugin
 
     public static Dictionary<string, string> KnownMods = new Dictionary<string, string>();
     public static Dictionary<string, string> KnownCheats = new Dictionary<string, string>();
-    public static List<string> KnownPeople = new List<string>();
+    // public static List<string> KnownPeople = new List<string>();
 
     public void Awake()
     {
         new Harmony(Info.Metadata.GUID).PatchAll();
 
-        using (HttpClient httpClient = new HttpClient())
-        {
-            HttpResponseMessage knownModsResponse = httpClient.GetAsync(GorillaInfoURL + "KnownMods.txt").Result;
-            HttpResponseMessage knownCheatsResponse = httpClient.GetAsync(GorillaInfoURL + "KnownCheats.txt").Result;
-            HttpResponseMessage knownPeopleResponse = httpClient.GetAsync("https://raw.githubusercontent.com/Not-A-Bird-07/GorillaFriends/refs/heads/main/gorillas.verified").Result;
+        bool NametagsE = Config.Bind("Name", "Enabled", true, "Shows name of players").Value;
+        bool PlatformE = Config.Bind("Platform", "Enabled", true, "Checks platform of players").Value;
+        bool ModCheckE = Config.Bind("ModList", "Enabled", true, "Shows lists of (known) mods for players (if they have any)").Value;
 
-            knownModsResponse.EnsureSuccessStatusCode();
-            knownCheatsResponse.EnsureSuccessStatusCode();
-            knownPeopleResponse.EnsureSuccessStatusCode();
+        Platform.UseOculusName = Config.Bind("Platform", "UseOculusName", false, "Replaces \"Oculus\" and \"Meta\" with \"Oculus Rift\" and \"Oculus Quest\".").Value;
+        Name.GFriends = Config.Bind("Name", "GFriendsIntegration", true, "Use GorillaFriends to get colors for names").Value;
 
-            using (Stream stream = knownModsResponse.Content.ReadAsStreamAsync().Result)
-            using (StreamReader reader = new StreamReader(stream))
-                KnownMods = JsonConvert.DeserializeObject<Dictionary<string, string>>(reader.ReadToEnd());
+        if (NametagsE)
+            UpdateTags += Name.Update;
+        
+        if (PlatformE)
+            UpdateTags += Platform.Update;
+        
+        if (ModCheckE) {
+            UpdateTags += ModList.Update;
 
-            using (Stream stream = knownCheatsResponse.Content.ReadAsStreamAsync().Result)
-            using (StreamReader reader = new StreamReader(stream))
-                KnownCheats = JsonConvert.DeserializeObject<Dictionary<string, string>>(reader.ReadToEnd());
+            using (HttpClient httpClient = new HttpClient())
+            {
+                HttpResponseMessage knownModsResponse = httpClient.GetAsync(GorillaInfoURL + "KnownMods.txt").Result;
+                HttpResponseMessage knownCheatsResponse = httpClient.GetAsync(GorillaInfoURL + "KnownCheats.txt").Result;
+                // HttpResponseMessage knownPeopleResponse = httpClient.GetAsync("https://raw.githubusercontent.com/Not-A-Bird-07/GorillaFriends/refs/heads/main/gorillas.verified").Result;
 
-            using (Stream stream = knownPeopleResponse.Content.ReadAsStreamAsync().Result)
-            using (StreamReader reader = new StreamReader(stream)) {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    KnownPeople.Add(line);
+                knownModsResponse.EnsureSuccessStatusCode();
+                knownCheatsResponse.EnsureSuccessStatusCode();
+                // knownPeopleResponse.EnsureSuccessStatusCode();
+
+                using (Stream stream = knownModsResponse.Content.ReadAsStreamAsync().Result)
+                using (StreamReader reader = new StreamReader(stream))
+                    KnownMods = JsonConvert.DeserializeObject<Dictionary<string, string>>(reader.ReadToEnd());
+
+                using (Stream stream = knownCheatsResponse.Content.ReadAsStreamAsync().Result)
+                using (StreamReader reader = new StreamReader(stream))
+                    KnownCheats = JsonConvert.DeserializeObject<Dictionary<string, string>>(reader.ReadToEnd());
+                /*
+                using (Stream stream = knownPeopleResponse.Content.ReadAsStreamAsync().Result)
+                using (StreamReader reader = new StreamReader(stream)) {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        KnownPeople.Add(line);
+                    }
                 }
+                */
             }
         }
-
-        Name.Enabled = Config.Bind("Name", "Enabled", true, "Shows name of players").Value;
-        Name.GFriends = Config.Bind("Name", "GFriendsIntegration", true, "Use GorillaFriends to get colors for names").Value;
-        Platform.Enabled = Config.Bind("Platform", "Enabled", true, "Checks platform of players").Value;
-        Platform.UseOculusName = Config.Bind("Platform", "UseOculusName", true, "Replaces \"Oculus\" and \"Meta\" with \"Oculus Rift\" and \"Oculus Quest\".").Value;
-        ModList.Enabled = Config.Bind("ModList", "Enabled", true, "Shows lists of (known) mods for players (if they have any)").Value;
     }
 
-    public void Update()
-    {
-        Name.Update();
-        Platform.Update();
-    }
+    public static event Action UpdateTags = delegate { };
+    public void Update() => UpdateTags();
 
     public class TMPLookAt : MonoBehaviour
     {

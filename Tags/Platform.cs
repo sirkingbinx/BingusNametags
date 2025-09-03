@@ -6,9 +6,8 @@ namespace BingusNametags.Tags
 {
     public class Platform
     {
-        public static bool Enabled = false;   
         public static Dictionary<VRRig, GameObject> ptags = new Dictionary<VRRig, GameObject>();
-        public static bool UseOculusName = true;
+        public static bool UseOculusName = false;
 
         private static string GetPlatform(VRRig rig)
         {
@@ -21,17 +20,6 @@ namespace BingusNametags.Tags
                 result = $"[{(UseOculusName ? "Oculus Rift" : "Oculus")}]";
             else
                 result = $"[{(UseOculusName ? "Oculus Quest" : "Meta")}]";
-
-            /*
-            // a little fucked, but gets properties
-            foreach (string prop in rig.OwningNetPlayer.GetPlayerRef().CustomProperties.Keys)
-            {
-                if (Main.KnownMods.ContainsKey(prop))
-                    result += $"<color=blue>[{Main.KnownMods[prop]}]</color> ";
-                else if (Main.KnownCheats.ContainsKey(prop))
-                    result += $"<color=red>[{Main.KnownCheats[prop]}]</color> ";
-            }
-            */
 
             return result;
         }
@@ -60,7 +48,6 @@ namespace BingusNametags.Tags
 
         public static void Update()
         {
-            if (!Enabled) return;
             if (GorillaParent.instance != null)
             {
                 List<VRRig> list = new List<VRRig>();

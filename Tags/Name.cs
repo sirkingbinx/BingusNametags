@@ -10,12 +10,10 @@ namespace BingusNametags.Tags
 
         static float offset = 1f;
 
-        public static bool Enabled = false;
         public static bool GFriends = false;
 
         public static void Update()
         {
-            if (!Enabled) return;
             if (GorillaParent.instance != null)
             {
                 List<VRRig> list = new List<VRRig>();
@@ -45,19 +43,17 @@ namespace BingusNametags.Tags
             TextMeshPro component = tags[rig].GetComponent<TextMeshPro>();
 
             if (GFriends) {
-                if (GFriendsIntegration.RecentlyPlayedWith(rig.OwningNetPlayer))
-                    component.text = $"<color=#ffa0a0>{rig.OwningNetPlayer.NickName}</color>";
-                
-                if (GFriendsIntegration.Friend(rig.OwningNetPlayer))
+                if (GFriendsIntegration.Verified(rig.OwningNetPlayer))
+                    component.text = $"<color=#7fff7f>{rig.OwningNetPlayer.NickName}</color>";
+                else if (GFriendsIntegration.Friend(rig.OwningNetPlayer))
                     component.text = $"<color=#cc7fe5>{rig.OwningNetPlayer.NickName}</color>";
-            }
-
-            bool verified = Main.KnownPeople.Contains(rig.OwningNetPlayer.UserId);
-
-            if (!verified)
+                else if (GFriendsIntegration.RecentlyPlayedWith(rig.OwningNetPlayer))
+                    component.text = $"<color=#ffa0a0>{rig.OwningNetPlayer.NickName}</color>"; 
+                else
+                    component.text = rig.OwningNetPlayer.NickName;
+            } else {
                 component.text = rig.OwningNetPlayer.NickName;
-            else
-                component.text = $"<color=#7fff7f>{rig.OwningNetPlayer.NickName}</color>";
+            }
 
             Transform transform = rig.transform.Find("Head") ?? rig.transform;
             tags[rig].transform.position = transform.position + new Vector3(0f, offset, 0f);

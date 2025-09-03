@@ -6,7 +6,6 @@ namespace BingusNametags.Tags
 {
     public class ModList
     {
-        public static bool Enabled = false;   
         public static Dictionary<VRRig, GameObject> mtags = new Dictionary<VRRig, GameObject>();
 
         private static string GetMods(VRRig rig)
@@ -49,7 +48,6 @@ namespace BingusNametags.Tags
 
         public static void Update()
         {
-            if (!Enabled) return;
             if (GorillaParent.instance != null)
             {
                 List<VRRig> list = new List<VRRig>();
