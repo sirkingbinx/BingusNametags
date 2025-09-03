@@ -36,10 +36,11 @@ namespace BingusNametags
             {
                 if (who != null && text != null)
                 {
-                    Camera.main.transform.forward.y = 0f;
-                    Camera.main.transform.forward.Normalize();
+                    Vector3 f = Camera.main.transform.forward;
+                    f.y = 0f;
+                    f.Normalize();
 
-                    transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
+                    transform.rotation = Quaternion.LookRotation(f);
                 }
             }
 

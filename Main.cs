@@ -2,6 +2,7 @@
 using BingusNametags.Tags;
 using HarmonyLib;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
