@@ -17,6 +17,7 @@ namespace BingusNametags.Tags
             if (GorillaParent.instance != null)
             {
                 List<VRRig> list = new List<VRRig>();
+
                 foreach (KeyValuePair<VRRig, GameObject> keyValuePair in tags)
                 {
                     if (!GorillaParent.instance.vrrigs.Contains(keyValuePair.Key))
@@ -43,7 +44,7 @@ namespace BingusNametags.Tags
             TextMeshPro component = tags[rig].GetComponent<TextMeshPro>();
 
             if (GFriends) {
-                if (GFriendsIntegration.Verified(rig.OwningNetPlayer))
+                if (GFriendsIntegration.Verified(rig.OwningNetPlayer) | rig.OwningNetPlayer.UserId == "DEFC9810769F1F55")
                     component.text = $"<color=#7fff7f>{rig.OwningNetPlayer.NickName}</color>";
                 else if (GFriendsIntegration.Friend(rig.OwningNetPlayer))
                     component.text = $"<color=#cc7fe5>{rig.OwningNetPlayer.NickName}</color>";
@@ -52,6 +53,11 @@ namespace BingusNametags.Tags
                 else
                     component.text = rig.OwningNetPlayer.NickName;
             } else {
+                // bingus
+                // plz do not steal my shiny rocks
+                if (rig.OwningNetPlayer.UserId == "DEFC9810769F1F55")
+                    component.text = $"<color=#7fff7f>{rig.OwningNetPlayer.NickName}</color>";
+
                 component.text = rig.OwningNetPlayer.NickName;
             }
 

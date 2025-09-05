@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ public class Main: BaseUnityPlugin
     public static Dictionary<string, string> KnownMods = new Dictionary<string, string>();
     public static Dictionary<string, string> KnownCheats = new Dictionary<string, string>();
 
+    public static TMP_FontAsset jbMono;
+
     public void Awake()
     {
         new Harmony(Info.Metadata.GUID).PatchAll();
@@ -28,6 +31,20 @@ public class Main: BaseUnityPlugin
 
         Platform.UseOculusName = Config.Bind("Platform", "UseOculusName", false, "Replaces \"Oculus\" and \"Meta\" with \"Oculus Rift\" and \"Oculus Quest\".").Value;
         Name.GFriends = Config.Bind("Name", "GFriendsIntegration", true, "Use GorillaFriends to get colors for names").Value;
+
+        string jbFontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "BingusNametags/JBMono.ttf");
+
+        if (!File.Exists(jbFontPath))
+        {
+            Stream jbFont = Assembly.GetExecutingAssembly().GetManifestResourceStream("BingusNametags.Resources.JBMono.ttf");
+            using (var memoryStream = new MemoryStream())
+            {
+                jbFont.CopyTo(memoryStream);
+                File.WriteAllBytes(jbFontPath, memoryStream.ToArray());
+            }
+        }
+
+        jbMono = TMP_FontAsset.CreateFontAsset(new Font(jbFontPath));
 
         if (NametagsE)
             UpdateTags += Name.Update;
