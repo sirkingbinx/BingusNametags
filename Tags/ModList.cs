@@ -7,17 +7,24 @@ namespace BingusNametags.Tags
     public class ModList
     {
         public static Dictionary<VRRig, GameObject> mtags = new Dictionary<VRRig, GameObject>();
+        public static Dictionary<string, string> mods = new Dictionary<string, string>();
+
+        public static void Kickstart()
+        {
+            foreach (string prop in Main.KnownMods.Keys)
+                mods.Add(prop.ToLower(), Main.KnownMods[prop]);
+        }
 
         private static string GetMods(VRRig rig)
         {
             string result = "";
 
-            // a little fucked, but gets properties
+            foreach (string prop in Main.KnownMods.Keys)
+                mods.Add(prop.ToLower(), Main.KnownMods[prop]);
+
             foreach (string prop in rig.OwningNetPlayer.GetPlayerRef().CustomProperties.Keys)
-            {
-                if (Main.KnownMods.TryGetValue(prop.ToLower(), out string modinfo))
+                if (mods.TryGetValue(prop.ToLower(), out string modinfo))
                     result += $"[{modinfo}] ";
-            }
 
             return result;
         }

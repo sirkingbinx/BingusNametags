@@ -41,7 +41,7 @@ public class Main: BaseUnityPlugin
         bool ModCheckE = Config.Bind("ModList", "Enabled", true, "Shows lists of (known) mods for players (if they have any)").Value;
 
         // specific settings
-        Platform.UseOculusName = Config.Bind("Platform", "UseOculusName", false, "Replaces \"Oculus\" and \"Meta\" with \"Oculus Rift\" and \"Oculus Quest\".").Value;
+        Platform.UseOculusName = Config.Bind("Platform", "UseOculusName", false, "Replaces \"Rift PCVR\" and \"Meta\" with \"Oculus Rift\" and \"Oculus Quest\".").Value;
         Name.GFriends = Config.Bind("Name", "GFriendsIntegration", true, "Use GorillaFriends to get colors for names").Value;
 
         // color
@@ -60,6 +60,7 @@ public class Main: BaseUnityPlugin
         
         if (ModCheckE) {
             UpdateTags += ModList.Update;
+            ModList.Kickstart(); // lowercases all da mods
 
             //    This code is from GorillaNametags by HanSolo
             //    Used just for checking mods

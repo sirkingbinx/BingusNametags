@@ -1,5 +1,4 @@
-﻿using GorillaFriends;
-using BepInEx.Bootstrap;
+﻿using BepInEx.Bootstrap;
 
 namespace BingusNametags
 {
