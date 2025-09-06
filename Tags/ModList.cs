@@ -15,10 +15,8 @@ namespace BingusNametags.Tags
             // a little fucked, but gets properties
             foreach (string prop in rig.OwningNetPlayer.GetPlayerRef().CustomProperties.Keys)
             {
-                if (Main.KnownMods.ContainsKey(prop))
-                    result += $"<color=blue>[{Main.KnownMods[prop]}] </color> ";
-                else if (Main.KnownCheats.ContainsKey(prop))
-                    result += $"<color=red>[{Main.KnownCheats[prop]}] </color> ";
+                if (Main.KnownMods.TryGetValue(prop.ToLower(), out string modinfo))
+                    result += $"[{modinfo}] ";
             }
 
             return result;

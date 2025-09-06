@@ -19,7 +19,12 @@ namespace BingusNametags
             textMeshPro.enableAutoSizing = false;
             textMeshPro.fontSize = 4f;
             textMeshPro.alignment = TextAlignmentOptions.Center;
-            textMeshPro.font = jbMono;
+
+            if (customFont)
+                textMeshPro.font = customFont;
+            else
+                textMeshPro.fontStyle = FontStyles.Bold;
+
             textMeshPro.color = color;
             textMeshPro.text = initialText;
 
