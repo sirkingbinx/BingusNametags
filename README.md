@@ -13,12 +13,12 @@ You can create your own nametags using `BingusNametagPlugin`.
 
 **Example:**
 ```cs
-using BingusNametags;
 using BingusNametags.Plugins;
 using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using BepInEx;
 
 namespace MyNametag
 {
@@ -75,6 +75,14 @@ namespace MyNametag
                         UpdateTag(vrrig);
             }
         }
+    }
+
+    [BepInDependency("bingus.nametags", BepInDependency.DependencyFlags.HardDependency)]
+    [BepInPlugin("myname.mynametagbootstrapper", "MyNametag", "1.0.0")]
+    public class Bootstrap
+    {
+        // You probably don't need to mess with this
+        public void Awake() => BingusPluginManager.Register<Nametag>();
     }
 }
 ```

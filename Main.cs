@@ -49,7 +49,7 @@ public class Main: BaseUnityPlugin
         accentColor = Config.Bind("Global", "AccentColor", Color.blue, "Sets the accent color for the non-essential nametag things").Value;
 
         // load plugins
-        new GameObject("BingusNametagsPluginSupport", typeof(BingusNametagPlugin));
+        // new GameObject("BingusNametagsPluginSupport", typeof(BingusNametagPlugin));
 
         string fontPath = Path.Combine(AssemblyDirectory, @"BingusNametagsFont.ttf");
 

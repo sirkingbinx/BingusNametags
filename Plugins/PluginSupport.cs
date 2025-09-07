@@ -7,36 +7,23 @@ using UnityEngine;
 
 namespace BingusNametags.Plugins
 {
-    public class PluginSupport : MonoBehaviour
+    public class BingusPluginManager
     {
-        public static PluginSupport instance;
-
-        public void Awake()
+        public static void Register<T>()
         {
-            instance = this;
-            GorillaTagger.OnPlayerSpawned(GameAwake);
-        }
+            Type type = typeof(T);
 
-        public void GameAwake()
-        {
-            var classesWithAttribute = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(a => a.GetTypes())
-                .Where(t => Attribute.IsDefined(t, typeof(BingusNametagPlugin)));
+            Console.WriteLine($"BingusNametagsPlugin: Loading nametag plugin: {type.FullName}");
 
-            foreach (Type type in classesWithAttribute)
-            {
-                Console.WriteLine($"BingusNametagsPlugin: Loading nametag plugin: {type.FullName}");
+            BingusNametagPlugin attribute = (BingusNametagPlugin)Attribute.GetCustomAttribute(type, typeof(BingusNametagPlugin));
+            MethodInfo tryUpdate = type.GetMethod("Update", BindingFlags.Public);
 
-                BingusNametagPlugin attribute = (BingusNametagPlugin)Attribute.GetCustomAttribute(type, typeof(BingusNametagPlugin));
-                MethodInfo tryUpdate = type.GetMethod("Update", BindingFlags.Public);
+            if (tryUpdate == null)
+                Debug.LogError($"BingusNametagsPlugin: Error - TYPE: ${type.FullName}\nNo update method found, try adding a public void Update().");
+            else
+                Main.UpdateTags += delegate { tryUpdate.Invoke(type, null); };
 
-                if (tryUpdate == null)
-                    Debug.LogError($"BingusNametagsPlugin: Error - TYPE: ${type.FullName}\nNo update method found, try adding a public void Update().");
-                else
-                    Main.UpdateTags += delegate { tryUpdate.Invoke(type, null); };
-
-                Debug.Log($"BingusNametagsPlugin: Loaded nametag plugin: ${type.FullName}");
-            }
+            Debug.Log($"BingusNametagsPlugin: Loaded nametag plugin: ${type.FullName}");
         }
     }
 }
