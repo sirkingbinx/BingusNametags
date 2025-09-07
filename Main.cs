@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using BingusNametags.Plugins;
 using BingusNametags.Tags;
 using HarmonyLib;
 using Newtonsoft.Json;
@@ -46,6 +47,9 @@ public class Main: BaseUnityPlugin
 
         // color
         accentColor = Config.Bind("Global", "AccentColor", Color.blue, "Sets the accent color for the non-essential nametag things").Value;
+
+        // load plugins
+        new GameObject("BingusNametagsPluginSupport", typeof(BingusNametagPlugin));
 
         string fontPath = Path.Combine(AssemblyDirectory, @"BingusNametagsFont.ttf");
 
