@@ -16,7 +16,7 @@ namespace BingusNametags.Plugins
             Console.WriteLine($"BingusNametagsPlugin: Loading nametag plugin: {type.FullName}");
 
             BingusNametagPlugin attribute = (BingusNametagPlugin)Attribute.GetCustomAttribute(type, typeof(BingusNametagPlugin));
-            MethodInfo tryUpdate = type.GetMethod("Update", BindingFlags.Public);
+            MethodInfo tryUpdate = type.GetMethod("Update", BindingFlags.Public | BindingFlags.Instance);
 
             if (tryUpdate == null)
                 Debug.LogError($"BingusNametagsPlugin: Error - TYPE: ${type.FullName}\nNo update method found, try adding a public void Update().");

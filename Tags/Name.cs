@@ -39,7 +39,7 @@ namespace BingusNametags.Tags
         private static void UpdateTag(VRRig rig)
         {
             if (!tags.ContainsKey(rig))
-                tags[rig] = NametagCreator.CreateTag(rig, Color.white, offset);
+                tags[rig] = NametagCreator.CreateTag(rig, Color.white, offset, rig.OwningNetPlayer.NickName);
 
             TextMeshPro component = tags[rig].GetComponent<TextMeshPro>();
 
