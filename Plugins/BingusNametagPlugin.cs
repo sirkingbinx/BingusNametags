@@ -29,7 +29,16 @@ namespace BingusNametags.Plugins
             }
         }
 
-        public BingusNametagPlugin(float _offset) =>
+        public BingusNametagPlugin(float _offset) {
             offset = _offset;
+
+            Assembly invoking = Assembly.GetCallingAssembly();
+            Type[] plugins = from type in invoking.GetTypes()
+                where type.IsClass && type.IsDefined(typeof(BingusNametagPlugin), false)
+                select type;
+            
+            foreach (Type Plugin in plugins)
+                PluginSupport.Register<Plugin>();
+        }
     }
 }

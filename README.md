@@ -23,7 +23,8 @@ using BepInEx;
 namespace MyNametag
 {
     // BingusNametagPlugin(float offset)
-    [BingusNametagPlugin(1f)]
+    // The offsets 0.6f, 0.8f, and 1f are already used by the mod
+    [BingusNametagPlugin(1.2f)]
     public class Nametag
     {
         public Dictionary<VRRig, GameObject> nametags = new Dictionary<VRRig, GameObject>();
@@ -79,10 +80,11 @@ namespace MyNametag
 
     [BepInDependency("bingus.nametags", BepInDependency.DependencyFlags.HardDependency)]
     [BepInPlugin("myname.mynametagbootstrapper", "MyNametag", "1.0.0")]
-    public class Bootstrap
+    public class Bootstrap : BaseUnityPlugin
     {
-        // You probably don't need to mess with this
-        public void Awake() => BingusPluginManager.Register<Nametag>();
+        // Remove this if you already have an Awake() function in your BaseUnityPlugin
+        // It's only needed to make BepInEx wake up
+        public void Awake() => Debug.Log("ruhkdlkyuhgjdx")
     }
 }
 ```
