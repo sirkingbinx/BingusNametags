@@ -1,4 +1,4 @@
-# BingusNametags
+# BingusNametags ![download badge thing (its not a virus i promise)](https://img.shields.io/github/downloads/sirkingbinx/BingusNametags/total)
 BingusNametags is a customizable name mod for Gorilla Tag. It's easily extendable by anyone with a little bit of C# knowledge.
 
 <img width=350 height=350 src="https://github.com/user-attachments/assets/ad530b19-5795-40d8-95cb-3a697340e041">
