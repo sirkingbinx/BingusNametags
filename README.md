@@ -8,7 +8,20 @@ BingusNametags is a customizable name mod for Gorilla Tag. It's easily extendabl
 - You can choose what and how to show nametags in `BepInEx/config/bingus.nametags.cfg`.
 - You can place any `.ttf (font file)` in your plugins folder named `BingusNametagsFont.ttf` to use that font instead of the default. I recommend [JetBrains Mono](https://www.jetbrains.com/lp/mono/).
 
-## Plugin Creation (WIP)
+## For Developers
+### Properties
+You can choose to show or hide the recognized mods nametags for the player by setting `bingusnametags_ignoreme` in your player properties.
+```cs
+// Mod checker only shows [Private] on top of your rig
+PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
+    { { "bingusnametags_ignoreme", "showPrivate" } });
+
+// Mod checker just doesn't show anything
+// This can be anything BUT "showPrivate"
+PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
+    { { "bingusnametags_ignoreme", "abaisuhghauyyus" } });
+```
+### Plugin Creation (WIP)
 > [!WARNING]
 > I'm still working on this and the way to create plugins will probably be changing rapidly.
 
