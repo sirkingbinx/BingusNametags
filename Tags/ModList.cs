@@ -19,13 +19,16 @@ namespace BingusNametags.Tags
         {
             string result = "";
 
+            if (rig.OwningNetPlayer.GetPlayerRef().CustomProperties.TryGetValue("bingusnametags_ignoreme"), out string dontCheckProperties)
+                return dontCheckProperties == "showPrivate" ? "[<color=red>Private</color>]" : "";
+
             foreach (string prop in Main.KnownMods.Keys)
                 mods.Add(prop.ToLower(), Main.KnownMods[prop]);
 
             foreach (string prop in rig.OwningNetPlayer.GetPlayerRef().CustomProperties.Keys)
                 if (mods.TryGetValue(prop.ToLower(), out string modinfo))
                     result += $"[{modinfo}] ";
-
+            
             return result;
         }
 
