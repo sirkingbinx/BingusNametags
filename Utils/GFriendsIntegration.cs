@@ -10,12 +10,12 @@ namespace BingusNametags
             Chainloader.PluginInfos.ContainsKey(uuid);
 
         public static bool Friend(NetPlayer player) =>
-            Installed("net.rusjj.gorillafriends") ?? GorillaFriends.Main.IsFriend(player.UserId);
+            Installed("net.rusjj.gorillafriends") && GorillaFriends.Main.IsFriend(player.UserId);
 
         public static bool RecentlyPlayedWith(NetPlayer player) =>
-            Installed("net.rusjj.gorillafriends") ?? GorillaFriends.Main.HasPlayedWithUsRecently(player.UserId) == GorillaFriends.Main.eRecentlyPlayed.Before;
+            Installed("net.rusjj.gorillafriends") && GorillaFriends.Main.HasPlayedWithUsRecently(player.UserId) == GorillaFriends.Main.eRecentlyPlayed.Before;
         
         public static bool Verified(NetPlayer player) =>
-            Installed("net.rusjj.gorillafriends") ?? GorillaFriends.Main.IsVerified(player.UserId);
+            Installed("net.rusjj.gorillafriends") && GorillaFriends.Main.IsVerified(player.UserId);
     }
 }
