@@ -25,7 +25,7 @@ using TMPro;
 public class MyNametag : MonoBehaviour
 {
     void Start() =>
-        BGNametagPluginUtils.Hook(NametagUpdate);
+        PluginManager.AddPluginUpdate(NametagUpdate);
 
     void NametagUpdate(VRRig rig, TextMeshPro textObject) {
         // do nametag stuff here. textObject represents the tag TextMeshPro object

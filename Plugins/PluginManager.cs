@@ -1,16 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 namespace BingusNametags.Plugins
 {
+    public class PluginManager
+    {
+        internal static Dictionary<string, BingusNametagsPlugin> loadedPlugins = new Dictionary<string, BingusNametagsPlugin>();
+
+        public static AddPluginUpdate(Action updateFunction)
+        {
+            BingusNametagsPlugin assignedPluginManager = new BingusNametagsPlugin(updateFunction);
+
+            Main.UpdateTags += assignedPluginManager.Update;
+
+            loadedPlugins.Add(Assembly.GetCallingAssembly().FullName, assignedPluginManager);
+        }
+    }
+
     internal class BingusNametagsPlugin
     {
-        public Dictionary<VRRig, GameObject> tags = new Dictionary<VRRig, GameObject>();
+        internal Dictionary<VRRig, GameObject> tags = new Dictionary<VRRig, GameObject>();
 
-        public static void Update()
+        internal void Update()
         {
             if (GorillaParent.instance != null)
             {
@@ -30,19 +46,33 @@ namespace BingusNametags.Plugins
 
                 foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
                     if (vrrig != GorillaTagger.Instance.offlineVRRig)
-                        UpdateTag(vrrig);
+                        UpdateTagLocal(vrrig);
             }
         }
 
-        private static void UpdateTag(GameObject tagObject, VRRig rig)
+        internal static event Action UpdateTag = delegate { };
+
+        internal void UpdateTagLocal(VRRig rig)
         {
-            
+            if (!tags.ContainsKey(rig))
+                tags[rig] = NametagCreator.CreateTag(rig, Main.accentColor, offset, "PluginTextObject");
+
+            TextMeshPro component = tags[rig].GetComponent<TextMeshPro>();
+
+            UpdateTag(component, rig);
+
+            Transform transform = rig.transform.Find("Head") ?? rig.transform;
+            ptags[rig].transform.position = transform.position + new Vector3(0f, offset, 0f);
+
+            if (Camera.main != null)
+            {
+                Vector3 forward = Camera.main.transform.forward;
+                forward.y = 0f;
+                forward.Normalize();
+                ptags[rig].transform.rotation = Quaternion.LookRotation(forward);
+            }
         }
-    }
 
-    public class PluginManager
-    {
-
-        
+        internal BingusNametagsPlugin(Action updateFunction) => UpdateTag += updateFunction;
     }
 }
