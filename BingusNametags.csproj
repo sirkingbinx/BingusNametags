@@ -247,9 +247,6 @@
 		<Reference Include="UnityEngine.PhysicsModule">
 		  <HintPath>$(GameAssemblyPath)\UnityEngine.PhysicsModule.dll</HintPath>
 		</Reference>
-		<Reference Include="UnityEngine.ProfilerModule">
-		  <HintPath>$(GameAssemblyPath)\UnityEngine.ProfilerModule.dll</HintPath>
-		</Reference>
 		<Reference Include="UnityEngine.PropertiesModule">
 		  <HintPath>$(GameAssemblyPath)\UnityEngine.PropertiesModule.dll</HintPath>
 		</Reference>

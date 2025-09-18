@@ -1,5 +1,4 @@
 ﻿using BepInEx;
-using BingusNametags.Plugins;
 using BingusNametags.Tags;
 using HarmonyLib;
 using Newtonsoft.Json;
@@ -39,7 +38,6 @@ public class Main: BaseUnityPlugin
         // enable things
         bool NametagsE = Config.Bind("Name", "Enabled", true, "Shows name of players").Value;
         bool PlatformE = Config.Bind("Platform", "Enabled", true, "Checks platform of players").Value;
-        bool ModCheckE = Config.Bind("ModList", "Enabled", true, "Shows lists of (known) mods for players (if they have any)").Value;
 
         // specific settings
         Platform.UseOculusName = Config.Bind("Platform", "UseOculusName", false, "Replaces \"Rift PCVR\" and \"Meta\" with \"Oculus Rift\" and \"Oculus Quest\".").Value;
@@ -61,28 +59,6 @@ public class Main: BaseUnityPlugin
         
         if (PlatformE)
             UpdateTags += Platform.Update;
-        
-        if (ModCheckE) {
-            UpdateTags += ModList.Update;
-            ModList.Kickstart(); // lowercases all da mods
-
-            //    This code is from GorillaNametags by HanSolo
-            //    Used just for checking mods
-            //    https://github.com/HanSolo1000Falcon/GorillaNametags
-
-            //    check LICENSE.txt for license stuff
-
-            using (HttpClient httpClient = new HttpClient())
-            {
-                HttpResponseMessage knownModsResponse = httpClient.GetAsync(GorillaInfoURL + "KnownMods.txt").Result;
-                
-                knownModsResponse.EnsureSuccessStatusCode();
-
-                using (Stream stream = knownModsResponse.Content.ReadAsStreamAsync().Result)
-                using (StreamReader reader = new StreamReader(stream))
-                    KnownMods = JsonConvert.DeserializeObject<Dictionary<string, string>>(reader.ReadToEnd());
-            }
-        }
     }
 
     public static event Action UpdateTags = delegate { };
