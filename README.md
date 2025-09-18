@@ -24,8 +24,9 @@ using TMPro;
 
 public class MyNametag : MonoBehaviour
 {
+    // respresents an action and tagOffset. 0.8f and 1f are already taken, i recommend incrementing by 0.2f
     void Start() =>
-        PluginManager.AddPluginUpdate(NametagUpdate);
+        PluginManager.AddPluginUpdate(NametagUpdate, 1.2f);
 
     void NametagUpdate(VRRig rig, TextMeshPro textObject) {
         // do nametag stuff here. textObject represents the tag TextMeshPro object

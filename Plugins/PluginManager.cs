@@ -10,14 +10,18 @@ namespace BingusNametags.Plugins
 {
     public class PluginManager
     {
+        public static bool PluginsEnabled = true;
         internal static Dictionary<string, BingusNametagsPlugin> loadedPlugins = new Dictionary<string, BingusNametagsPlugin>();
 
-        public static AddPluginUpdate(Action updateFunction)
+        public static void AddPluginUpdate(Action<TextMeshPro, VRRig> updateFunction, float tagOffset)
         {
-            BingusNametagsPlugin assignedPluginManager = new BingusNametagsPlugin(updateFunction);
+            if (!PluginsEnabled) return;
+
+            BingusNametagsPlugin assignedPluginManager = new BingusNametagsPlugin();
+            assignedPluginManager.UpdateTag += updateFunction;
+            assignedPluginManager.tagOffset = tagOffset;
 
             Main.UpdateTags += assignedPluginManager.Update;
-
             loadedPlugins.Add(Assembly.GetCallingAssembly().FullName, assignedPluginManager);
         }
     }
@@ -50,29 +54,28 @@ namespace BingusNametags.Plugins
             }
         }
 
-        internal static event Action UpdateTag = delegate { };
+        internal event Action<TextMeshPro, VRRig> UpdateTag = delegate { };
+        internal float tagOffset;
 
         internal void UpdateTagLocal(VRRig rig)
         {
             if (!tags.ContainsKey(rig))
-                tags[rig] = NametagCreator.CreateTag(rig, Main.accentColor, offset, "PluginTextObject");
+                tags[rig] = NametagCreator.CreateTag(rig, Main.accentColor, tagOffset, "PluginTextObject");
 
             TextMeshPro component = tags[rig].GetComponent<TextMeshPro>();
 
             UpdateTag(component, rig);
 
             Transform transform = rig.transform.Find("Head") ?? rig.transform;
-            ptags[rig].transform.position = transform.position + new Vector3(0f, offset, 0f);
+            tags[rig].transform.position = transform.position + new Vector3(0f, tagOffset, 0f);
 
             if (Camera.main != null)
             {
                 Vector3 forward = Camera.main.transform.forward;
                 forward.y = 0f;
                 forward.Normalize();
-                ptags[rig].transform.rotation = Quaternion.LookRotation(forward);
+                tags[rig].transform.rotation = Quaternion.LookRotation(forward);
             }
         }
-
-        internal BingusNametagsPlugin(Action updateFunction) => UpdateTag += updateFunction;
     }
 }
