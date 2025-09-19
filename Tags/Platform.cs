@@ -17,7 +17,7 @@ namespace BingusNametags.Tags
             if (concatStringOfCosmeticsAllowed.Contains("S. FIRST LOGIN"))
                 result = "[Steam]";
             else if (concatStringOfCosmeticsAllowed.Contains("FIRST LOGIN") | rig.Creator.GetPlayerRef().CustomProperties.Count > 1)
-                result = $"[{(UseOculusName ? "Oculus Rift" : "Rift PCVR")}]";
+                result = $"[{(UseOculusName ? "Oculus Rift" : "Oculus PCVR")}]";
             else
                 result = $"[{(UseOculusName ? "Oculus Quest" : "Meta")}]";
 
