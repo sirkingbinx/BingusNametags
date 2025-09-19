@@ -13,7 +13,7 @@ namespace BingusNametags.Plugins
         public static bool PluginsEnabled = true;
         internal static List<BingusNametagsPlugin> loadedPlugins = new List<BingusNametagsPlugin>();
 
-        public static void AddPluginUpdate(Action<TextMeshPro, VRRig> updateFunction)
+        public static void AddPluginUpdate(Action<TextMeshPro, VRRig> updateFunction, float? nametagOffset)
         {
             if (!PluginsEnabled) return;
 
@@ -21,7 +21,7 @@ namespace BingusNametags.Plugins
             loadedPlugins.Add(assignedPluginManager);
 
             assignedPluginManager.UpdateTag += updateFunction;
-            assignedPluginManager.tagOffset = (1.2f + (loadedPlugins.IndexOf(assignedPluginManager) * 0.2f));
+            assignedPluginManager.tagOffset = nametagOffset != null ? nametagOffset : (1.2f + (loadedPlugins.IndexOf(assignedPluginManager) * 0.2f));
 
             Main.UpdateTags += assignedPluginManager.Update;
         }
