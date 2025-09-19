@@ -15,8 +15,6 @@ using UnityEngine;
 [BepInPlugin("bingus.nametags", "BingusNametags", "1.0.0")]
 public class Main: BaseUnityPlugin
 {
-    private const string GorillaInfoURL = "https://raw.githubusercontent.com/HanSolo1000Falcon/GorillaInfo/main/";
-
     public static Dictionary<string, string> KnownMods = new Dictionary<string, string>();
     public static Color accentColor = Color.blue;
     public static TMP_FontAsset customFont;
@@ -41,7 +39,7 @@ public class Main: BaseUnityPlugin
         bool PlatformE = Config.Bind("Platform", "Enabled", true, "Checks platform of players").Value;
 
         // specific settings
-        Platform.UseOculusName = Config.Bind("Platform", "UseOculusName", false, "Replaces \"Rift PCVR\" and \"Meta\" with \"Oculus Rift\" and \"Oculus Quest\".").Value;
+        Platform.UseOculusName = Config.Bind("Platform", "UseOculusName", false, "Replaces \"Oculus PCVR\" and \"Meta\" with \"Oculus Rift\" and \"Oculus Quest\".").Value;
         Name.GFriends = Config.Bind("Name", "GFriendsIntegration", true, "Use GorillaFriends to get colors for names").Value;
 
         // color
