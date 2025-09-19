@@ -11,18 +11,19 @@ namespace BingusNametags.Plugins
     public class PluginManager
     {
         public static bool PluginsEnabled = true;
-        internal static Dictionary<string, BingusNametagsPlugin> loadedPlugins = new Dictionary<string, BingusNametagsPlugin>();
+        internal static List<BingusNametagsPlugin> loadedPlugins = new List<BingusNametagsPlugin>();
 
-        public static void AddPluginUpdate(Action<TextMeshPro, VRRig> updateFunction, float tagOffset)
+        public static void AddPluginUpdate(Action<TextMeshPro, VRRig> updateFunction)
         {
             if (!PluginsEnabled) return;
 
             BingusNametagsPlugin assignedPluginManager = new BingusNametagsPlugin();
+            loadedPlugins.Add(assignedPluginManager);
+
             assignedPluginManager.UpdateTag += updateFunction;
-            assignedPluginManager.tagOffset = tagOffset;
+            assignedPluginManager.tagOffset = (1.2f + (loadedPlugins.IndexOf(assignedPluginManager) * 0.2f));
 
             Main.UpdateTags += assignedPluginManager.Update;
-            loadedPlugins.Add(Assembly.GetCallingAssembly().FullName, assignedPluginManager);
         }
     }
 
@@ -55,7 +56,7 @@ namespace BingusNametags.Plugins
         }
 
         internal event Action<TextMeshPro, VRRig> UpdateTag = delegate { };
-        internal float tagOffset;
+        internal float tagOffset = 1.2f;
 
         internal void UpdateTagLocal(VRRig rig)
         {
