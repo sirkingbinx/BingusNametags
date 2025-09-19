@@ -19,40 +19,8 @@ If installing via MonkeModManager, place the font in the `BingusNametags` folder
 
 ## Plugins
 The plugin system is an easy way for other mods to add their own nametags to BingusNametags. It does not provide a whole ton of control over positioning but is a quick and easy way to display information.
-```cs
-using BepInEx;
-using BingusNametags.Plugins;
-using TMPro;
-using UnityEngine
 
-public class MyNametag : MonoBehaviour
-{
-    // New updates should automatically manage nametag offsets.
-    void Start() =>
-        PluginManager.AddPluginUpdate(NametagUpdate);
-
-    void NametagUpdate(TextMeshPro textObject, VRRig playerRig) {
-        // do nametag stuff here. textObject represents the tag TextMeshPro object
-        textObject.Text = playerRig.OwningNetPlayer.NickName;
-    }
-}
-
-// See below if you already have a mod put together and nametags are only an optional feature.
-[BepInDependency("bingus.nametags", DependencyFlags.HardDependency)]
-[BepInPlugin("myname.mynametag", "NametagThing", "1.0.0")]
-public class NametagLoader : BaseUnityPlugin
-{
-    void Start() => new GameObject(Info.Metadata.GUID, typeof(MyNametag));
-}
-```
-If your mod does other stuff besides add nametags, you can append this somewhere during mod initialization.
-```cs
-using BepInEx.Chainloader;
-```
-```cs
-Chainloader.PluginInfos.ContainsKey(_UUID) ?? new GameObject(Info.Metadata.GUID, typeof(MyNametag));
-```
+You can find a template for plugins here: [sirkingbinx/BingusNametagsPluginTemplate](https://github.com/sirkingbinx/BingusNametagsPluginTemplate)
 
 ## Credits
-- Mod checker list from [GorillaNametags](https://github.com/HanSolo1000Falcon/GorillaNametags) by [HanSolo1000Falcon](https://github.com/HanSolo1000Falcon)
 - Verified users, friending system, and recent player checks from [GorillaFriends](https://github.com/rusjj/gorillafriends) by [RusJJ](https://github.com/rusjj)
