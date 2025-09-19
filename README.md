@@ -17,19 +17,20 @@ BingusNametags is a customizable name mod for Gorilla Tag. It's easily extendabl
 > Plugins are still a work in progress and are not expected to work for a while.
 You can create your own nametags with the plugin system. While it's technically not a real plugin system, you can still extend the nametag system and that's all I need.
 
-```
+```cs
 using BingusNametags.Plugins;
 using UnityEngine;
 using TMPro;
 
 public class MyNametag : MonoBehaviour
 {
-    // respresents an action and tagOffset. 0.8f and 1f are already taken, i recommend incrementing by 0.2f
+    // New updates should automatically manage nametag offsets.
     void Start() =>
-        PluginManager.AddPluginUpdate(NametagUpdate, 1.2f);
+        PluginManager.AddPluginUpdate(NametagUpdate);
 
-    void NametagUpdate(VRRig rig, TextMeshPro textObject) {
+    void NametagUpdate(TextMeshPro textObject, VRRig playerRig) {
         // do nametag stuff here. textObject represents the tag TextMeshPro object
+        textObject.Text = playerRig.OwningNetPlayer.NickName;
     }
 }
 ```
