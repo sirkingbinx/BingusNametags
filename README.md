@@ -12,7 +12,7 @@ BingusNametags is a customizable name mod for Gorilla Tag. It's easily extendabl
 
 ## Configuration
 ### File
-You can choose what and how to show nametags in `BepInEx/config/bingus.nametags.cfg`.
+You can choose what and how to show nametags in the config file. It is named `BingusNametags.cfg` and is located in the same directory as the BingusNametags plugin.
 ### Custom Font
 You can place any `.ttf (font file)` in the same folder as BingusNametags named `BingusNametagsFont.ttf` to use that font instead of the default.
 If installing via MonkeModManager, place the font in the `BingusNametags` folder.
