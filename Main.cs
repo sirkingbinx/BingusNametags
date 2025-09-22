@@ -54,10 +54,10 @@ public class Main: BaseUnityPlugin
             customFont = TMP_FontAsset.CreateFontAsset(new Font(fontPath));
 
         if (NametagsE)
-            UpdateTags += Name.Update;
+            PluginManager.AddPluginUpdate(Name.UpdateNametag, 1f);
         
         if (PlatformE)
-            UpdateTags += Platform.Update;
+            PluginManager.AddPluginUpdate(Platform.UpdateNametag, 0.8f);
     }
 
     public static event Action UpdateTags = delegate { };
