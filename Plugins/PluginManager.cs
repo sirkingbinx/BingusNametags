@@ -13,9 +13,9 @@ namespace BingusNametags.Plugins
         public static bool PluginsEnabled = true;
         internal static List<BingusNametagsPlugin> loadedPlugins = new List<BingusNametagsPlugin>();
 
-        public static void AddPluginUpdate(Action<TextMeshPro, VRRig> updateFunction, float? nametagOffset)
+        public static void AddPluginUpdate(Action<TextMeshPro, VRRig> updateFunction, float nametagOffset = 1f, bool useAccentColor = true)
         {
-            if (!PluginsEnabled) return;
+            if (!PluginsEnabled) throw new Exception("Plugins are not currently enabled.");
 
             BingusNametagsPlugin assignedPluginManager = new BingusNametagsPlugin();
             loadedPlugins.Add(assignedPluginManager);

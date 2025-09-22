@@ -2,8 +2,6 @@
 
 namespace BingusNametags
 {
-    // work in progress
-    // might work
     internal class GFriendsIntegration
     {
         private static bool Installed(string uuid) =>

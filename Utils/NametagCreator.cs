@@ -1,6 +1,5 @@
 ﻿using TMPro;
 using UnityEngine;
-using static Main;
 
 namespace BingusNametags
 {
@@ -21,7 +20,7 @@ namespace BingusNametags
             textMeshPro.alignment = TextAlignmentOptions.Center;
 
             if (customFont)
-                textMeshPro.font = customFont;
+                textMeshPro.font = Configuration.customFont;
             else
                 textMeshPro.fontStyle = FontStyles.Bold;
 
