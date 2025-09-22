@@ -1,9 +1,9 @@
 # BingusNametags ![download badge thing (its not a virus i promise)](https://img.shields.io/github/downloads/sirkingbinx/BingusNametags/total)
 BingusNametags is a customizable name mod for Gorilla Tag. It's easily extendable by anyone with a little bit of C# knowledge.
 
-> <img width=350 height=350 src="https://github.com/user-attachments/assets/ad530b19-5795-40d8-95cb-3a697340e041">
-> <img width=350 height=350 src="https://github.com/user-attachments/assets/cb126c2f-3cf4-4b40-a405-a0288445a7c6">
->
+<img width=350 height=350 src="https://github.com/user-attachments/assets/ad530b19-5795-40d8-95cb-3a697340e041">
+<img width=350 height=350 src="https://github.com/user-attachments/assets/cb126c2f-3cf4-4b40-a405-a0288445a7c6">
+
 > <b>Note</b>: Both of these mods <a href="#custom-font">use a custom font</a> called <a href="https://www.jetbrains.com/lp/mono/">JetBrains Mono</a>.
 
 ## Dependencies
