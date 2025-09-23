@@ -1,8 +1,8 @@
-using BepInEx;
+using BepInEx.Configuration;
+using BingusNametags;
 using BingusNametags.Plugins;
 using BingusNametags.Tags;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using TMPro;
@@ -36,7 +36,7 @@ public class Configuration
         if (cfg.Bind("Name", "Enabled", true, "Show the deafult nametag").Value)
             PluginManager.AddPluginUpdate(Name.UpdateNametag, 1f, false);
 
-        Name.GFriends = cfg.Bind("Name", "GFriendsIntegration", true, "Use GorillaFriends to get colors for names").Value;
+        GFriendsIntegration.Enabled = cfg.Bind("Name", "GFriendsIntegration", true, "Use GorillaFriends to get colors for names").Value;
 
         if (cfg.Bind("Platform", "Enabled", true, "Show the platform tag").Value)
             PluginManager.AddPluginUpdate(Platform.UpdateNametag, 0.8f, true);
@@ -54,7 +54,7 @@ public class Configuration
         GFriendsFriendColor = cfg.Bind("Color", "GFriends_FriendColor", "#cc7fe5", "Hex code for friended players").Value;
 
         // Font loading
-        if (File.Exists(Path.Combine(AssemblyDirectory, @"BingusNametagsFont.ttf");))
-            customFont = TMP_FontAsset.CreateFontAsset(new Font(fontPath));
+        if (File.Exists(Path.Combine(AssemblyDirectory, @"BingusNametagsFont.ttf")))
+            customFont = TMP_FontAsset.CreateFontAsset(new Font(Path.Combine(AssemblyDirectory, @"BingusNametagsFont.ttf")));
     }
 }
