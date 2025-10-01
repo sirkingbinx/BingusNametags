@@ -11,27 +11,31 @@ namespace BingusNametags.Plugins
     public class PluginManager
     {
         public static bool PluginsEnabled = true;
-        internal static List<BingusNametagsPlugin> loadedPlugins = new List<BingusNametagsPlugin>();
-
-        public static void AddPluginUpdate(Action<TextMeshPro, VRRig> updateFunction, float nametagOffset = 0f, bool useAccentColor = true)
-        {
-            if (!PluginsEnabled) throw new Exception("Plugins are not currently enabled.");
-
-            BingusNametagsPlugin assignedPluginManager = new BingusNametagsPlugin();
-            loadedPlugins.Add(assignedPluginManager);
-
-            assignedPluginManager.UpdateTag += updateFunction;
-            assignedPluginManager.tagOffset = nametagOffset != 0f ? nametagOffset : (1.2f + (loadedPlugins.IndexOf(assignedPluginManager) * 0.2f));
-
-            Main.UpdateTags += assignedPluginManager.Update;
-        }
+        internal static List<BingusNametagsPlugin> Plugins = new List<BingusNametagsPlugin>();
     }
 
-    internal class BingusNametagsPlugin
+    public class BingusNametagsPlugin
     {
-        internal Dictionary<VRRig, GameObject> tags = new Dictionary<VRRig, GameObject>();
+        private Dictionary<VRRig, GameObject> tags = new Dictionary<VRRig, GameObject>();
+        private bool _Enabled = true;
 
-        internal void Update()
+        public bool Enabled {
+            get {
+                return _Enabled;
+            }
+
+            set {
+                _Enabled = value;
+
+                if (value) {
+                    Main.UpdateTags += assignedPluginManager.Update;
+                } else if (!value) {
+                    Main.UpdateTags -= assignedPluginManager.Update;
+                }
+            }
+        }
+
+        private void Update()
         {
             if (GorillaParent.instance != null)
             {
@@ -55,17 +59,29 @@ namespace BingusNametags.Plugins
             }
         }
 
-        internal event Action<TextMeshPro, VRRig> UpdateTag = delegate { };
-        internal float tagOffset = 1.2f;
+        private event Func<VRRig, string, string> UpdateTag;
+        private float tagOffset = 1.2f;
 
-        internal void UpdateTagLocal(VRRig rig)
+        private void UpdateTagLocal(VRRig rig)
         {
             if (!tags.ContainsKey(rig))
-                tags[rig] = NametagCreator.CreateTag(rig, Configuration.accentColor, tagOffset, "PluginTextObject");
+                tags[rig] = NametagCreator.CreateTag(rig, tagOffset, "Text");
 
             TextMeshPro component = tags[rig].GetComponent<TextMeshPro>();
 
-            UpdateTag(component, rig);
+            string text = "";
+
+            if (UpdateTag != null) {
+                string _text = UpdateTag(rig, Configuration.accentColor);
+                // check if it contains color tags
+
+                if (!_text.Contains("<color=")) {
+                    // add our own
+                    text = $"<color={Configuration.accentColor}>{text}</color>";
+                }
+            }
+
+            component.text = text;
 
             Transform transform = rig.transform.Find("Head") ?? rig.transform;
             tags[rig].transform.position = transform.position + new Vector3(0f, tagOffset, 0f);
@@ -77,6 +93,16 @@ namespace BingusNametags.Plugins
                 forward.Normalize();
                 tags[rig].transform.rotation = Quaternion.LookRotation(forward);
             }
+        }
+
+        public BingusNametagsPlugin(Func<VRRig, string, string> _NametagUpdate, bool __Enabled = true, float _NametagOffset = 0f) {
+            if (!PluginManager.PluginsEnabled) throw new Exception("Plugins are not currently enabled.");
+
+            Plugins.Add(this);
+
+            this.UpdateTag += _NametagUpdate;
+            this.tagOffset = _NametagOffset != 0f ? _NametagOffset : (1.2f + (PluginManager.Plugins.IndexOf(this) * 0.2f));
+            this._Enabled = __Enabled;
         }
     }
 }
