@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 
 namespace BingusNametags.Plugins
 {
@@ -15,7 +12,8 @@ namespace BingusNametags.Plugins
 
         public static void AddPluginUpdate(Action<TextMeshPro, VRRig> updateFunction, float nametagOffset = 0f, bool useAccentColor = true)
         {
-            if (!PluginsEnabled) throw new Exception("Plugins are not currently enabled.");
+            // if (!PluginsEnabled) throw new Exception("Plugins are not currently enabled.");
+
 
             BingusNametagsPlugin assignedPluginManager = new BingusNametagsPlugin();
             loadedPlugins.Add(assignedPluginManager);
