@@ -13,7 +13,7 @@ namespace BingusNametags.Plugins
         public static bool PluginsEnabled = true;
         internal static List<BingusNametagsPlugin> loadedPlugins = new List<BingusNametagsPlugin>();
 
-        public static void AddPluginUpdate(Action<TextMeshPro, VRRig> updateFunction, float nametagOffset = 0f, bool useAccentColor = true)
+        public static void AddPluginUpdate(Action<TextMeshPro, VRRig> updateFunction, float nametagOffset = 1f, bool useAccentColor = true)
         {
             if (!PluginsEnabled) throw new Exception("Plugins are not currently enabled.");
 
@@ -21,7 +21,7 @@ namespace BingusNametags.Plugins
             loadedPlugins.Add(assignedPluginManager);
 
             assignedPluginManager.UpdateTag += updateFunction;
-            assignedPluginManager.tagOffset = nametagOffset != 0f ? nametagOffset : (1.2f + (loadedPlugins.IndexOf(assignedPluginManager) * 0.2f));
+            assignedPluginManager.tagOffset = nametagOffset != null ? nametagOffset : (1.2f + (loadedPlugins.IndexOf(assignedPluginManager) * 0.2f));
 
             Main.UpdateTags += assignedPluginManager.Update;
         }
@@ -61,7 +61,7 @@ namespace BingusNametags.Plugins
         internal void UpdateTagLocal(VRRig rig)
         {
             if (!tags.ContainsKey(rig))
-                tags[rig] = NametagCreator.CreateTag(rig, Configuration.accentColor, tagOffset, "PluginTextObject");
+                tags[rig] = NametagCreator.CreateTag(rig, Main.accentColor, tagOffset, "PluginTextObject");
 
             TextMeshPro component = tags[rig].GetComponent<TextMeshPro>();
 
