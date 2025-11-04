@@ -61,7 +61,7 @@ namespace BingusNametags.Plugins
         internal void UpdateTagLocal(VRRig rig)
         {
             if (!tags.ContainsKey(rig))
-                tags[rig] = NametagCreator.CreateTag(rig, Main.accentColor, tagOffset, "PluginTextObject");
+                tags[rig] = NametagCreator.CreateTag(rig, Configuration.accentColor, tagOffset, "PluginTextObject");
 
             TextMeshPro component = tags[rig].GetComponent<TextMeshPro>();
 
