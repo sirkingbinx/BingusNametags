@@ -23,7 +23,7 @@ namespace BingusNametags.Tags
             return result;
         }
 
-        internal static void UpdateNametag(TextMeshPro component, VRRig rig) =>
-            component.text = GetPlatform(rig);
+        internal static string UpdateNametag(TextMeshPro component, VRRig rig) =>
+            GetPlatform(rig);
     }
 }
