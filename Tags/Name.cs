@@ -6,6 +6,7 @@ namespace BingusNametags.Tags
 {
     internal class Name
     {
+        public static bool GFriends = true;
         internal static void UpdateNametag(TextMeshPro component, VRRig rig)
         {
             if (GFriends) {

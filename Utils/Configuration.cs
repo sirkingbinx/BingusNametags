@@ -1,8 +1,8 @@
-using BepInEx;
+using BepInEx.Configuration;
+using BingusNametags;
 using BingusNametags.Plugins;
 using BingusNametags.Tags;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using TMPro;
@@ -54,7 +54,7 @@ public class Configuration
         GFriendsFriendColor = cfg.Bind("Color", "GFriends_FriendColor", "#cc7fe5", "Hex code for friended players").Value;
 
         // Font loading
-        if (File.Exists(Path.Combine(AssemblyDirectory, @"BingusNametagsFont.ttf");))
-            customFont = TMP_FontAsset.CreateFontAsset(new Font(fontPath));
+        if (File.Exists(Path.Combine(AssemblyDirectory, @"BingusNametagsFont.ttf")))
+            customFont = TMP_FontAsset.CreateFontAsset(new Font(Path.Combine(AssemblyDirectory, @"BingusNametagsFont.ttf")));
     }
 }

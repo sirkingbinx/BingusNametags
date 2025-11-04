@@ -8,7 +8,7 @@ namespace BingusNametags.Tags
     {
         internal static bool UseOculusName = false;
 
-        internal static string GetPlatform(VRRig rig)
+        internal static void GetPlatform(TextMeshPro tmp, VRRig rig)
         {
             string concatStringOfCosmeticsAllowed = rig.concatStringOfCosmeticsAllowed;
             string result;
@@ -20,10 +20,10 @@ namespace BingusNametags.Tags
             else
                 result = $"[{(UseOculusName ? "Oculus Quest" : "Meta")}]";
 
-            return result;
+            tmp.text = result;
         }
 
-        internal static string UpdateNametag(TextMeshPro component, VRRig rig) =>
-            GetPlatform(rig);
+        internal static void UpdateNametag(TextMeshPro component, VRRig rig) =>
+            GetPlatform(component, rig);
     }
 }

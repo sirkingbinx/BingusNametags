@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 
 namespace BingusNametags.Plugins
 {
@@ -13,7 +10,7 @@ namespace BingusNametags.Plugins
         public static bool PluginsEnabled = true;
         internal static List<BingusNametagsPlugin> loadedPlugins = new List<BingusNametagsPlugin>();
 
-        public static void AddPluginUpdate(Action<TextMeshPro, VRRig> updateFunction, float nametagOffset = 1f, bool useAccentColor = true)
+        public static void AddPluginUpdate(Action<TextMeshPro, VRRig> updateFunction, float nametagOffset = 0f, bool useAccentColor = true)
         {
             if (!PluginsEnabled) throw new Exception("Plugins are not currently enabled.");
 
@@ -21,7 +18,8 @@ namespace BingusNametags.Plugins
             loadedPlugins.Add(assignedPluginManager);
 
             assignedPluginManager.UpdateTag += updateFunction;
-            assignedPluginManager.tagOffset = nametagOffset != null ? nametagOffset : (1.2f + (loadedPlugins.IndexOf(assignedPluginManager) * 0.2f));
+            assignedPluginManager.tagOffset = nametagOffset != 0f ? nametagOffset : (1.2f + (loadedPlugins.IndexOf(assignedPluginManager) * 0.2f));
+            assignedPluginManager.useAccent = useAccentColor;
 
             Main.UpdateTags += assignedPluginManager.Update;
         }
@@ -30,6 +28,7 @@ namespace BingusNametags.Plugins
     internal class BingusNametagsPlugin
     {
         internal Dictionary<VRRig, GameObject> tags = new Dictionary<VRRig, GameObject>();
+        internal bool useAccent = true;
 
         internal void Update()
         {
@@ -61,11 +60,13 @@ namespace BingusNametags.Plugins
         internal void UpdateTagLocal(VRRig rig)
         {
             if (!tags.ContainsKey(rig))
-                tags[rig] = NametagCreator.CreateTag(rig, Configuration.accentColor, tagOffset, "PluginTextObject");
+                tags[rig] = NametagCreator.CreateTag(rig, tagOffset, "PluginTextObject");
 
             TextMeshPro component = tags[rig].GetComponent<TextMeshPro>();
 
             UpdateTag(component, rig);
+
+            component.text = $"<color=#{(useAccent ? Configuration.accentColor : "ffffff")}>{component.text}</color>";
 
             Transform transform = rig.transform.Find("Head") ?? rig.transform;
             tags[rig].transform.position = transform.position + new Vector3(0f, tagOffset, 0f);
