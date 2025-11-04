@@ -10,9 +10,9 @@ using UnityEngine;
 
 public class Configuration
 {
-    public static Color accentColor = Color.blue;
     public static TMP_FontAsset customFont;
 
+    public static string accentColor = "#1c32ef";
     public static string GFriendsVerifiedColor = "#7fff7f";
     public static string GFriendsRecentColor = "#ffa0a0";
     public static string GFriendsFriendColor = "#cc7fe5";
@@ -47,7 +47,7 @@ public class Configuration
         PluginManager.PluginsEnabled = cfg.Bind("Plugins", "Enabled", true, "Allow plugins to load").Value;
 
         // Colors
-        accentColor = cfg.Bind("Color", "AccentColor", Color.blue, "Sets the accent color for the non-essential nametag things").Value;
+        accentColor = cfg.Bind("Color", "AccentColor", "#1c32ef", "Sets the accent color for the non-essential nametag things").Value;
 
         GFriendsVerifiedColor = cfg.Bind("Color", "GFriends_VerifiedColor", "#7fff7f", "Hex code for verified players").Value;
         GFriendsRecentColor = cfg.Bind("Color", "GFriends_RecentColor", "#ffa0a0", "Hex code for recently played with players").Value;

@@ -5,7 +5,7 @@ namespace BingusNametags
 {
     public class NametagCreator
     {
-        public static GameObject CreateTag(VRRig rig, Color color, float offset, string initialText = "Test")
+        public static GameObject CreateTag(VRRig rig, float offset, string initialText = "Test")
         {
             GameObject gameObject = new GameObject("NameTag_TMP");
             Transform parent = rig.transform.Find("Body") ?? rig.transform;
@@ -24,7 +24,7 @@ namespace BingusNametags
             else
                 textMeshPro.fontStyle = FontStyles.Bold;
 
-            textMeshPro.color = color;
+            textMeshPro.color = Color.white;
             textMeshPro.text = initialText;
 
             TMPLookAt tmplookAt = gameObject.AddComponent<TMPLookAt>();
