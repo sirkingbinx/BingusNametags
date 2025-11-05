@@ -1,5 +1,4 @@
 using BepInEx.Configuration;
-using BingusNametags;
 using BingusNametags.Plugins;
 using BingusNametags.Tags;
 using System;

@@ -66,7 +66,7 @@ namespace BingusNametags.Plugins
 
             UpdateTag(component, rig);
 
-            component.text = $"<color=#{(useAccent ? Configuration.accentColor : "ffffff")}>{component.text}</color>";
+            component.text = $"<color={(useAccent ? Configuration.accentColor : "#ffffff")}>{component.text}</color>";
 
             Transform transform = rig.transform.Find("Head") ?? rig.transform;
             tags[rig].transform.position = transform.position + new Vector3(0f, tagOffset, 0f);
