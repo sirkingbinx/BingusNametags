@@ -12,10 +12,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Reference Include="0Harmony">
 		  <HintPath>$(BepInExAssemblyPath)\0Harmony.dll</HintPath>
 		</Reference>
@@ -24,6 +20,12 @@
 		</Reference>
 		<Reference Include="BepInEx">
 		  <HintPath>$(BepInExAssemblyPath)\BepInEx.dll</HintPath>
+		</Reference>
+		<Reference Include="ComputerInterface">
+		  <HintPath>$(PluginsPath)\ComputerInterface\ComputerInterface.dll</HintPath>
+		</Reference>
+		<Reference Include="ComputerInterface.Commands">
+		  <HintPath>$(PluginsPath)\ComputerInterface\ComputerInterface.Commands.dll</HintPath>
 		</Reference>
 		<Reference Include="GorillaFriends">
 		  <HintPath>$(PluginsPath)\GorillaFriends\GorillaFriends.dll</HintPath>

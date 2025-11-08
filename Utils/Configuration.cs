@@ -33,12 +33,12 @@ public class Configuration
 
         // built-in-stuff enabled
         if (cfg.Bind("Name", "Enabled", true, "Show the deafult nametag").Value)
-            PluginManager.AddPluginUpdate(Name.UpdateNametag, 1f, false);
+            PluginManager.AddPluginUpdate(Name.UpdateNametag, "Name Tag", 1f, false);
 
         Name.GFriends = cfg.Bind("Name", "GFriendsIntegration", true, "Use GorillaFriends to get colors for names").Value;
 
         if (cfg.Bind("Platform", "Enabled", true, "Show the platform tag").Value)
-            PluginManager.AddPluginUpdate(Platform.UpdateNametag, 0.8f, true);
+            PluginManager.AddPluginUpdate(Platform.UpdateNametag, "Platform Tag", 0.8f, true);
 
         Platform.UseOculusName = cfg.Bind("Platform", "OculusNamingScheme", true, "Use \"Oculus Rift\" and \"Oculus Quest\" instead of \"Oculus PCVR\" and \"Meta\".").Value;
     
