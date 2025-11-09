@@ -32,7 +32,7 @@ public class Configuration
         ConfigFile cfg = new ConfigFile(Path.Combine(AssemblyDirectory, "BingusNametags.cfg"), true);
 
         // built-in-stuff enabled
-        if (cfg.Bind("Name", "Enabled", true, "Show the deafult nametag").Value)
+        if (cfg.Bind("Name", "Enabled", true, "Show the default nametag").Value)
             PluginManager.AddPluginUpdate(Name.UpdateNametag, "Name Tag", 1f, false);
 
         Name.GFriends = cfg.Bind("Name", "GFriendsIntegration", true, "Use GorillaFriends to get colors for names").Value;
