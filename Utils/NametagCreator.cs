@@ -19,8 +19,8 @@ namespace BingusNametags
             textMeshPro.fontSize = 4f;
             textMeshPro.alignment = TextAlignmentOptions.Center;
 
-            if (Configuration.customFont)
-                textMeshPro.font = Configuration.customFont;
+            if (Configuration.CustomFont)
+                textMeshPro.font = Configuration.CustomFont;
             else
                 textMeshPro.fontStyle = FontStyles.Bold;
 

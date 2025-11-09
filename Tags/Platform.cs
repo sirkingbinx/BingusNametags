@@ -1,29 +1,22 @@
-﻿using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
+﻿using BingusNametags.Plugins;
 
 namespace BingusNametags.Tags
 {
-    internal class Platform
+    [BingusNametagsPlugin("Name", 0.8f)]
+    internal class Platform : INametag
     {
         internal static bool UseOculusName = false;
 
-        internal static void GetPlatform(TextMeshPro tmp, VRRig rig)
+        public string Update(VRRig rig)
         {
-            string concatStringOfCosmeticsAllowed = rig.concatStringOfCosmeticsAllowed;
-            string result;
+            var concatStringOfCosmeticsAllowed = rig.concatStringOfCosmeticsAllowed;
 
             if (concatStringOfCosmeticsAllowed.Contains("S. FIRST LOGIN"))
-                result = "[Steam]";
-            else if (concatStringOfCosmeticsAllowed.Contains("FIRST LOGIN") | rig.Creator.GetPlayerRef().CustomProperties.Count > 1)
-                result = $"[{(UseOculusName ? "Oculus Rift" : "Oculus PCVR")}]";
-            else
-                result = $"[{(UseOculusName ? "Oculus Quest" : "Meta")}]";
+                return "[Steam]";
+            if (concatStringOfCosmeticsAllowed.Contains("FIRST LOGIN") | rig.Creator.GetPlayerRef().CustomProperties.Count > 1)
+                return $"[{(UseOculusName ? "Oculus Rift" : "Oculus PCVR")}]";
 
-            tmp.text = result;
+            return $"[{(UseOculusName ? "Oculus Quest" : "Meta")}]";
         }
-
-        internal static void UpdateNametag(TextMeshPro component, VRRig rig) =>
-            GetPlatform(component, rig);
     }
 }

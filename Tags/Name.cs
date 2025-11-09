@@ -1,31 +1,24 @@
-﻿using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
+﻿using BingusNametags.Plugins;
 
 namespace BingusNametags.Tags
 {
-    internal class Name
+    [BingusNametagsPlugin("Name", 1f)]
+    internal class Name : INametag
     {
         public static bool GFriends = true;
-        internal static void UpdateNametag(TextMeshPro component, VRRig rig)
+        public string Update(VRRig rig)
         {
-            if (GFriends) {
-                if (GFriendsIntegration.Verified(rig.OwningNetPlayer) | rig.OwningNetPlayer.UserId == "DEFC9810769F1F55")
-                    component.text = $"<color=#7fff7f>{rig.OwningNetPlayer.NickName}</color>";
-                else if (GFriendsIntegration.Friend(rig.OwningNetPlayer))
-                    component.text = $"<color=#cc7fe5>{rig.OwningNetPlayer.NickName}</color>";
-                else if (GFriendsIntegration.RecentlyPlayedWith(rig.OwningNetPlayer))
-                    component.text = $"<color=#ffa0a0>{rig.OwningNetPlayer.NickName}</color>"; 
-                else
-                    component.text = rig.OwningNetPlayer.NickName;
-            } else {
-                // bingus
-                // plz do not steal my shiny rocks
-                if (rig.OwningNetPlayer.UserId == "DEFC9810769F1F55")
-                    component.text = $"<color=#7fff7f>{rig.OwningNetPlayer.NickName}</color>";
+            if (!GFriends) 
+                return rig.OwningNetPlayer.UserId == "DEFC9810769F1F55" ? $"<color=#7fff7f>{rig.OwningNetPlayer.NickName}</color>" : rig.OwningNetPlayer.NickName;
+            
+            if (GFriendsIntegration.Verified(rig.OwningNetPlayer) | rig.OwningNetPlayer.UserId == "DEFC9810769F1F55")
+                return $"<color=#7fff7f>{rig.OwningNetPlayer.NickName}</color>";
+            if (GFriendsIntegration.Friend(rig.OwningNetPlayer))
+                return $"<color=#cc7fe5>{rig.OwningNetPlayer.NickName}</color>";
+            if (GFriendsIntegration.RecentlyPlayedWith(rig.OwningNetPlayer))
+                return $"<color=#ffa0a0>{rig.OwningNetPlayer.NickName}</color>"; 
 
-                component.text = rig.OwningNetPlayer.NickName;
-            }
+            return rig.OwningNetPlayer.NickName;
         }
     }
 }

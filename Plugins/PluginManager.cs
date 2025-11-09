@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,13 +9,13 @@ namespace BingusNametags.Plugins
     public class PluginManager
     {
         public static bool PluginsEnabled = true;
-        public static List<BingusNametagsPlugin> Plugins = new List<BingusNametagsPlugin>();
+        public static List<BingusNametagsPlugin_Old> Plugins = new List<BingusNametagsPlugin_Old>();
 
         public static void AddPluginUpdate(Action<TextMeshPro, VRRig> updateFunction, string name = "Plugin Name", float nametagOffset = 0f, bool useAccentColor = true)
         {
             if (!PluginsEnabled) throw new Exception("Plugins are not currently enabled.");
 
-            BingusNametagsPlugin assignedPluginManager = new BingusNametagsPlugin();
+            BingusNametagsPlugin_Old assignedPluginManager = new BingusNametagsPlugin_Old();
             Plugins.Add(assignedPluginManager);
 
             assignedPluginManager.UpdateTag += updateFunction;
@@ -25,8 +26,8 @@ namespace BingusNametags.Plugins
             Main.UpdateTags += assignedPluginManager.Update;
         }
     }
-
-    public class BingusNametagsPlugin
+    
+    public class BingusNametagsPlugin_Old
     {
         public bool UseAccent = true;
         public bool Enabled = true;
@@ -69,7 +70,7 @@ namespace BingusNametags.Plugins
 
             UpdateTag(component, rig);
 
-            component.text = $"<color={(UseAccent ? Configuration.accentColor : "#ffffff")}>{component.text}</color>";
+            component.text = $"<color={(UseAccent ? Configuration.AccentColor : "#ffffff")}>{component.text}</color>";
 
             Transform transform = rig.transform.Find("Head") ?? rig.transform;
             _tags[rig].transform.position = transform.position + new Vector3(0f, TagOffset, 0f);
@@ -84,3 +85,4 @@ namespace BingusNametags.Plugins
         }
     }
 }
+*/
