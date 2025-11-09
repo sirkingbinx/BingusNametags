@@ -16,8 +16,8 @@ namespace BingusNametags
 
             GorillaTagger.OnPlayerSpawned(delegate
             {
-                Configuration.UpdateConfig();
                 Plugins.Plugins.PluginStart();
+                Configuration.UpdateConfig();
             });
 
             new Harmony(Info.Metadata.GUID).PatchAll();
