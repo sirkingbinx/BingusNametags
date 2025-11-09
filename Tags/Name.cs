@@ -6,6 +6,11 @@ namespace BingusNametags.Tags
     internal class Name : INametag
     {
         public static bool GFriends = true;
+        public static Name instance { get; private set; }
+        
+        public Name() => instance = this;
+        public bool Enabled { get; set; } = true;
+        
         public string Update(VRRig rig)
         {
             if (!GFriends) 

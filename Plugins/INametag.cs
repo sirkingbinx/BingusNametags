@@ -2,7 +2,7 @@ namespace BingusNametags.Plugins
 {
 	public interface INametag
 	{
-		public bool Enabled => true;
+		public bool Enabled { get; set; }
 		public string Update(VRRig tagOwner);
 	}
 }

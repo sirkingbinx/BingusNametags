@@ -6,6 +6,10 @@ namespace BingusNametags.Tags
     internal class Platform : INametag
     {
         internal static bool UseOculusName = false;
+        public static Platform instance { get; private set; }
+        
+        public Platform() => instance = this;
+        public bool Enabled { get; set; } = true;
 
         public string Update(VRRig rig)
         {

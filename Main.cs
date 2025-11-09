@@ -13,8 +13,12 @@ namespace BingusNametags
         public void Awake()
         {
             Version = Info.Metadata.Version;
-            Configuration.UpdateConfig();
-            Plugins.Plugins.PluginStart();
+
+            GorillaTagger.OnPlayerSpawned(delegate
+            {
+                Configuration.UpdateConfig();
+                Plugins.Plugins.PluginStart();
+            });
 
             new Harmony(Info.Metadata.GUID).PatchAll();
         }

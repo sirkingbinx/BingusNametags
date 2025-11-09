@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using BepInEx.Bootstrap;
 using HarmonyLib;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 
@@ -13,14 +15,14 @@ namespace BingusNametags.Plugins
 		public static List<INametag> All = new List<INametag>();
 		
 		// Locate plugins
-		private static List<INametag> GetNametagInterfaces()
+		private static List<Type> GetNametagInterfaces()
 		{
-			var nametags = AppDomain.CurrentDomain.GetAssemblies()
-				.SelectMany(assembly => assembly.GetTypes())
-				.Where(type => typeof(INametag).IsAssignableFrom(type) && type.IsClass)
-				.ForEach(type => Activator.CreateInstance(type));
+			var modAssemblies = Chainloader.PluginInfos.Values
+				.Select(pluginInfo => pluginInfo.Instance.GetType().Assembly).Distinct();
+            var nametagDefinitions = modAssemblies.SelectMany(assembly => assembly.GetTypes())
+				.Where(type => typeof(INametag).IsAssignableFrom(type) && type.IsClass && !type.IsInterface);
 
-			return new List<INametag>(nametags.Cast<INametag>());
+            return new List<Type>(nametagDefinitions);
 		}
 		
 		private static BingusNametagsPlugin GetNametagsPluginFromINametag(INametag nametag) => nametag.GetType().GetCustomAttribute<BingusNametagsPlugin>();
@@ -61,7 +63,7 @@ namespace BingusNametags.Plugins
 
 							TextMeshPro component = pluginData.Tags[rig].GetComponent<TextMeshPro>();
 
-							component.text = $"<color=#{Configuration.AccentColor}>{nametag.Update(rig)}</color>";
+							component.text = $"<color={Configuration.AccentColor}>{nametag.Update(rig)}</color>";
 
 							Transform transform = rig.transform.Find("Head") ?? rig.transform;
 							pluginData.Tags[rig].transform.position = transform.position + new Vector3(0f, pluginData.Offset, 0f);
@@ -83,7 +85,7 @@ namespace BingusNametags.Plugins
 		internal static void PluginStart()
 		{
 			foreach (var nametag in GetNametagInterfaces())
-				SetupPlugin(nametag);
+				SetupPlugin(Activator.CreateInstance(nametag) as INametag);
 		}
 	}
 }
