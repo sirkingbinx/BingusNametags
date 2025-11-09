@@ -27,7 +27,8 @@ You can use any TextMeshPro styling tricks (including `<color=*>`) for the namet
 
 ```cs
 // Note: not implemented yet, i'm working on it though :)
-[BingusNametagsPlugin("Plugin Name")]
+//                   (name        offset)
+[BingusNametagsPlugin("Plugin Name", 1.2f)]
 public class MyNametag : INametag
 {
     // Called everytime the nametags are updated (which is every 4 frames)
