@@ -36,7 +36,7 @@ public class Configuration
         Name.GFriends = cfg.Bind("Name", "GFriendsIntegration", true, "Use GorillaFriends to get colors for names").Value;
         
         Platform.Instance.Enabled = (cfg.Bind("Platform", "Enabled", true, "A tag that displays the user's current platform.").Value);
-        Platform.UseOculusName = cfg.Bind("Platform", "OculusNamingScheme", true, "Use \"Oculus Rift\" and \"Oculus Quest\" instead of \"Oculus PCVR\" and \"Meta\".").Value;
+        Platform.UseOculusName = cfg.Bind("Platform", "OculusNamingScheme", false, "Use \"Oculus Rift\" and \"Oculus Quest\" instead of \"Oculus PCVR\" and \"Meta\".").Value;
 
         // Colors
         AccentColor = cfg.Bind("Color", "AccentColor", "#1c32ef", "Sets the accent color for the non-essential nametag things").Value;
@@ -46,7 +46,7 @@ public class Configuration
         GFriendsFriendColor = cfg.Bind("Color", "GFriends_FriendColor", "#cc7fe5", "Hex code for friended players").Value;
 
         // Font loading
-        string fontFile = Directory.EnumerateFiles(AssemblyDirectory, "*.ttf", SearchOption.TopDirectoryOnly)
+        var fontFile = Directory.EnumerateFiles(AssemblyDirectory, "*.ttf", SearchOption.TopDirectoryOnly)
             .FirstOrDefault();
 
         if (fontFile != null) // font found
