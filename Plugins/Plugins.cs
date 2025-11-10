@@ -12,8 +12,15 @@ namespace BingusNametags.Plugins
 {
 	public class Plugins
 	{
+		/// <summary>
+		/// A list of all INametags.
+		/// </summary>
 		public static List<INametag> All = new List<INametag>();
-		public static Dictionary<INametag, BingusNametagsPlugin> MetadataDictionary = new Dictionary<INametag, BingusNametagsPlugin>();
+		
+		/// <summary>
+		/// Allows you to grab the BingusNametagsPlugin data associated with an INametag.
+		/// </summary>
+		public static Dictionary<INametag, BingusNametagsPlugin> Metadata = new Dictionary<INametag, BingusNametagsPlugin>();
 		
 		// Locate plugins
 		private static List<Type> GetNametagInterfaces()
@@ -36,7 +43,7 @@ namespace BingusNametags.Plugins
 				Debug.LogError($"Error in {nametag.GetType().Name}: No BingusNametagsPlugin attribute discovered.");
 			
 			All.Add(nametag);
-			MetadataDictionary.Add(nametag, pluginData);
+			Metadata.Add(nametag, pluginData);
 
 			Main.UpdateTags += delegate
 			{
