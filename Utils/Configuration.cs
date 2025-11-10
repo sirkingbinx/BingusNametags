@@ -3,6 +3,7 @@ using BingusNametags.Plugins;
 using BingusNametags.Tags;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
@@ -45,7 +46,10 @@ public class Configuration
         GFriendsFriendColor = cfg.Bind("Color", "GFriends_FriendColor", "#cc7fe5", "Hex code for friended players").Value;
 
         // Font loading
-        if (File.Exists(Path.Combine(AssemblyDirectory, @"BingusNametagsFont.ttf")))
-            CustomFont = TMP_FontAsset.CreateFontAsset(new Font(Path.Combine(AssemblyDirectory, @"BingusNametagsFont.ttf")));
+        string fontFile = Directory.EnumerateFiles(AssemblyDirectory, "*.ttf", SearchOption.TopDirectoryOnly)
+            .FirstOrDefault();
+
+        if (fontFile != null) // font found
+            CustomFont = TMP_FontAsset.CreateFontAsset(new Font(fontFile)));
     }
 }

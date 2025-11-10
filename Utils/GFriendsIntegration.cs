@@ -7,7 +7,6 @@ namespace BingusNametags
         private static bool Installed(string uuid) =>
             Chainloader.PluginInfos.ContainsKey(uuid);
 
-        // oopsies, shoulda been && instead of & (my bad lmao)
         public static bool Friend(NetPlayer player) =>
             Installed("net.rusjj.gorillafriends") && GorillaFriends.Main.IsFriend(player.UserId);
 
