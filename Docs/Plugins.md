@@ -10,7 +10,7 @@ public class MyNametag : INametag
         // All nametags (besides the name itself) are colored to the user's accent color.
         // Please respect this where you can.
         // The accent color is applied to all text that is not in <color> brackets.
-        return $"{NametagOwner.OwningNetPlayer.UserId}"
+        return $"{NametagOwner.OwningNetPlayer.UserId}";
     }
 }
 ```
