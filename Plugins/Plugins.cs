@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using BepInEx.Bootstrap;
-using HarmonyLib;
 using TMPro;
 using UnityEngine;
 
@@ -11,15 +10,8 @@ namespace BingusNametags.Plugins
 {
 	public class Plugins
 	{
-		/// <summary>
-		/// A list of all INametags.
-		/// </summary>
 		public static List<INametag> All = new List<INametag>();
-		
-		/// <summary>
-		/// Allows you to grab the BingusNametagsPlugin data associated with an INametag.
-		/// </summary>
-		public static Dictionary<INametag, BingusNametagsPlugin> Metadata = new Dictionary<INametag, BingusNametagsPlugin>();
+		public static Dictionary<INametag, BingusNametagsPlugin> MetadataDictionary = new Dictionary<INametag, BingusNametagsPlugin>();
 		
 		// Locate plugins
 		private static List<Type> GetNametagInterfaces()
@@ -31,61 +23,54 @@ namespace BingusNametags.Plugins
 
             return new List<Type>(nametagDefinitions);
 		}
-		
-		private static BingusNametagsPlugin GetNametagsPluginFromINametag(INametag nametag) => nametag.GetType().GetCustomAttribute<BingusNametagsPlugin>();
+
+		private static bool GetNametagsPluginFromINametag(INametag nametag, out BingusNametagsPlugin pluginData)
+		{
+			pluginData = nametag.GetType().GetCustomAttribute<BingusNametagsPlugin>();
+			return pluginData != null;
+		}
 
 		// Plugin management
 		private static void SetupPlugin(INametag nametag)
 		{
-			var pluginData = GetNametagsPluginFromINametag(nametag);
-			if (pluginData == null)
+			if (!GetNametagsPluginFromINametag(nametag, out var pluginData))
 				Debug.LogError($"Error in {nametag.GetType().Name}: No BingusNametagsPlugin attribute discovered.");
+			else
+				Debug.Log($"Loading plugin {pluginData.Name}");
 			
 			All.Add(nametag);
-			Metadata.Add(nametag, pluginData);
+			MetadataDictionary.Add(nametag, pluginData);
 
 			Main.UpdateTags += delegate
 			{
-				if (GorillaParent.hasInstance && pluginData != null)
+				if (!GorillaParent.hasInstance)
+					return;
+				
+				foreach (var rigPair in pluginData.Tags.Where(rigPair => !GorillaParent.instance.vrrigs.Contains(rigPair.Key) && !nametag.Enabled))
 				{
-					List<VRRig> list = new List<VRRig>();
+					rigPair.Value.Destroy();
+					pluginData.Tags.Remove(rigPair.Key);
+				}
 
-					foreach (KeyValuePair<VRRig, GameObject> keyValuePair in pluginData.Tags)
-					{
-						if (!GorillaParent.instance.vrrigs.Contains(keyValuePair.Key) || !nametag.Enabled)
-						{
-							keyValuePair.Value.Destroy();
-							list.Add(keyValuePair.Key);
-						}
-					}
+				foreach (var rig in GorillaParent.instance.vrrigs.Where(rig => rig != GorillaTagger.Instance.offlineVRRig))
+				{
+					if (!pluginData.Tags.ContainsKey(rig))
+						pluginData.Tags[rig] = NametagCreator.CreateTag(rig, pluginData.Offset, "");
 
-					foreach (var key in list)
-						pluginData.Tags.Remove(key);
+					var component = pluginData.Tags[rig].GetComponent<TextMeshPro>();
 
-					foreach (var rig in GorillaParent.instance.vrrigs)
-					{
-						if (rig != GorillaTagger.Instance.offlineVRRig)
-						{
-							if (!pluginData.Tags.ContainsKey(rig))
-								pluginData.Tags[rig] = NametagCreator.CreateTag(rig, pluginData.Offset, "");
+					component.text = $"<color={Configuration.AccentColor}>{nametag.Update(rig)}</color>";
 
-							TextMeshPro component = pluginData.Tags[rig].GetComponent<TextMeshPro>();
+					var transform = rig.transform.Find("Head") ?? rig.transform;
+					pluginData.Tags[rig].transform.position = transform.position + new Vector3(0f, pluginData.Offset, 0f);
 
-							component.text = $"<color={Configuration.AccentColor}>{nametag.Update(rig)}</color>";
-
-							Transform transform = rig.transform.Find("Head") ?? rig.transform;
-							pluginData.Tags[rig].transform.position = transform.position + new Vector3(0f, pluginData.Offset, 0f);
-
-							if (Camera.main == null)
-								return;
-							
-							Vector3 forward = Camera.main.transform.forward;
-							forward.y = 0f;
-							forward.Normalize();
-							pluginData.Tags[rig].transform.rotation = Quaternion.LookRotation(forward);
-						}
-					}
-
+					if (Camera.main == null)
+						return;
+					
+					Vector3 forward = Camera.main.transform.forward;
+					forward.y = 0f;
+					forward.Normalize();
+					pluginData.Tags[rig].transform.rotation = Quaternion.LookRotation(forward);
 				}
 			};
 		}

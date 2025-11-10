@@ -2,13 +2,13 @@
 
 namespace BingusNametags.Tags
 {
-    [BingusNametagsPlugin("Name", 0.8f)]
+    [BingusNametagsPlugin("Platform", 0.8f)]
     internal class Platform : INametag
     {
         internal static bool UseOculusName = false;
-        public static Platform instance { get; private set; }
+        public static Platform Instance { get; private set; }
         
-        public Platform() => instance = this;
+        public Platform() => Instance = this;
         public bool Enabled { get; set; } = true;
 
         public string Update(VRRig rig)

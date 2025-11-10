@@ -32,10 +32,10 @@ public class Configuration
     {
         var cfg = new ConfigFile(Path.Combine(AssemblyDirectory, "BingusNametags.cfg"), true);
 
-        Name.instance.Enabled = (cfg.Bind("Name", "Enabled", true, "A default nametag containing the name of the player.").Value);
+        Name.Instance.Enabled = (cfg.Bind("Name", "Enabled", true, "A default nametag containing the name of the player.").Value);
         Name.GFriends = cfg.Bind("Name", "GFriendsIntegration", true, "Use GorillaFriends to get colors for names").Value;
         
-        Platform.instance.Enabled = (cfg.Bind("Platform", "Enabled", true, "A tag that displays the user's current platform.").Value);
+        Platform.Instance.Enabled = (cfg.Bind("Platform", "Enabled", true, "A tag that displays the user's current platform.").Value);
         Platform.UseOculusName = cfg.Bind("Platform", "OculusNamingScheme", true, "Use \"Oculus Rift\" and \"Oculus Quest\" instead of \"Oculus PCVR\" and \"Meta\".").Value;
 
         // Colors
@@ -50,6 +50,6 @@ public class Configuration
             .FirstOrDefault();
 
         if (fontFile != null) // font found
-            CustomFont = TMP_FontAsset.CreateFontAsset(new Font(fontFile)));
+            CustomFont = TMP_FontAsset.CreateFontAsset(new Font(fontFile));
     }
 }

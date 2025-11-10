@@ -8,11 +8,13 @@ namespace BingusNametags
     [BepInPlugin("bingus.nametags", "BingusNametags", "1.2.0")]
     public class Main : BaseUnityPlugin
     {
-        public static Version Version = new Version("1.0.0");
+        public static Version Version;
+        public static Main Instance;
 
         public void Awake()
         {
             Version = Info.Metadata.Version;
+            Instance = this;
 
             GorillaTagger.OnPlayerSpawned(delegate
             {
