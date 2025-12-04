@@ -1,3 +1,6 @@
+> [!WARNING]
+> This project has mostly been replaced by [BingusNametags++](https://github.com/sirkingbinx/BingusNametagsPlusPlus), a better, more configurable, and overall cleaner nametag mod. > I recommend you try using BingusNametags++ over this.
+
 # BingusNametags ![download badge thing (its not a virus i promise)](https://img.shields.io/github/downloads/sirkingbinx/BingusNametags/total)
 BingusNametags is a customizable name mod for Gorilla Tag. It is customizable with [colors](#file), [fonts](#custom-font), and [plugins](#plugins) which add more nametags.
 
