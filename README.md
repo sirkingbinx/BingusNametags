@@ -8,7 +8,7 @@ This was the original image, I'm replacing them with the new nametags (and more 
 -->
 
 > [!NOTE]
-> This project has mostly been replaced by [AquasNametags](https://github.com/aquabytz/AquasNametags), a better, more configurable, and overall cleaner nametag mod. This mod will still get fixes for new versions, but I currently use and contribute to this newer nametag mod instead.
+> This project has mostly been replaced by [BingusNametags++](https://github.com/sirkingbinx/BingusNametagsPlusPlus), a better, more configurable, and overall cleaner nametag mod. This mod will still get fixes for new versions, but I currently use and contribute to this newer nametag mod instead.
 
 ## Dependencies
 > `*` indicate that the dependency is optional when using the mod, but required when building from source.
